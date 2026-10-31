@@ -5,6 +5,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { useRef, type CSSProperties, type ReactNode } from "react";
 import type { Lang } from "@/lib/types";
 import InkReveal from "./InkReveal";
+import LazyVideo from "./LazyVideo";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -22,7 +23,7 @@ export function FadeUp({ children, delay = 0, duration = 0.7, y = 24, className,
 const C = {
   en: {
     filmKicker: "Launch film",
-    filmTitle: "GapLens in 48 seconds",
+    filmTitle: "GapLens in 45 seconds",
     filmSub: "Five tabs, one missed fact, and how GapLens finds it. Turn the sound on.",
     statement: "We find the gaps your sources leave behind.",
     statementSub: "One question, a few links, and a clear map of what's confirmed, missing, conflicting or out of date.",
@@ -63,7 +64,7 @@ const C = {
   },
   hi: {
     filmKicker: "लॉन्च फ़िल्म",
-    filmTitle: "48 सेकंड में GapLens",
+    filmTitle: "45 सेकंड में GapLens",
     filmSub: "पाँच टैब, एक छूटी बात, और GapLens उसे कैसे ढूँढता है। आवाज़ चालू रखें।",
     statement: "हम वो कमियाँ ढूँढते हैं जो आपके स्रोत छोड़ जाते हैं।",
     statementSub: "एक सवाल, कुछ लिंक, और साफ़ नक्शा कि क्या पक्का है, क्या गायब है, कहाँ टकराव है और क्या पुराना है।",
@@ -164,10 +165,7 @@ export default function LandingSections({ lang, onDemo, onStart }: { lang: Lang;
   return (
     <div className="ls">
       <div className="ls-bg" aria-hidden>
-        <video autoPlay muted loop playsInline poster="/ember.jpg">
-          <source src="/ember.webm" type="video/webm" />
-          <source src="/ember.mp4" type="video/mp4" />
-        </video>
+        <LazyVideo ambient src1080="/ember.mp4" src720="/ember.mp4" poster="/ember.jpg" label="" watch=".ls-statement" rootMargin="400px 0px" />
         <div className="ls-scrim" />
       </div>
       <section className="ls-sec ls-film" id="film">
@@ -175,9 +173,7 @@ export default function LandingSections({ lang, onDemo, onStart }: { lang: Lang;
         <FadeUp as="h2" className="ls-title" delay={0.08}>{c.filmTitle}</FadeUp>
         <FadeUp as="p" className="ls-film-sub" delay={0.14}>{c.filmSub}</FadeUp>
         <FadeUp className="ls-film-frame" delay={0.2} y={40}>
-          <video controls playsInline preload="metadata" poster="/gaplens-launch-poster.webp" aria-label={c.filmTitle}>
-            <source src="/gaplens-launch.mp4" type="video/mp4" />
-          </video>
+          <LazyVideo src1080="/gaplens-demo-1080.mp4" src720="/gaplens-demo-720.mp4" poster="/gaplens-demo-poster.webp" label={c.filmTitle} />
         </FadeUp>
       </section>
       <Statement text={c.statement} sub={c.statementSub} />

@@ -9,9 +9,11 @@ Include the details people usually get wrong or that pages often skip (exact lim
 Return JSON: {"aspects":[{"id":"a1","label":"short label, max 5 words","why":"one sentence on why a reader needs it","importance":"high|med|low"}]}
 Rules: labels in English, sentence case, no numbering. 3 to 4 high, the rest med or low.`;
   const out = await chatJSON<{ aspects: Aspect[] }>(sys, `Question: ${question}`, { models: [MODELS.big, MODELS.alt, MODELS.small], maxTokens: 1500 });
-  return (out.aspects ?? []).slice(0, 9).map((a, i) => ({
-    id: `a${i + 1}`, label: String(a.label).slice(0, 48), why: String(a.why ?? ""),
-    importance: (["high", "med", "low"].includes(a.importance) ? a.importance : "med") as Aspect["importance"],
+  type Raw = Partial<Aspect> & { name?: unknown; title?: unknown; aspect?: unknown };
+  const pickLabel = (a: Raw) => [a.label, a.name, a.title, a.aspect].find((v) => typeof v === "string" && v.trim() && v.trim() !== "undefined") as string | undefined;
+  return ((out.aspects ?? []) as Raw[]).filter((a) => pickLabel(a)).slice(0, 9).map((a, i) => ({
+    id: `a${i + 1}`, label: pickLabel(a)!.trim().slice(0, 48), why: typeof a.why === "string" ? a.why : "",
+    importance: (["high", "med", "low"].includes(String(a.importance)) ? a.importance : "med") as Aspect["importance"],
   }));
 }
 
