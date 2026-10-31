@@ -9,6 +9,8 @@
 }
 .nv.hi { --sans: var(--font-mukta), var(--font-schibsted), sans-serif; }
 .nv button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+.nv-fallback { position: fixed; z-index: 1; right: 30%; bottom: 8vh; width: min(22vw, 300px); height: auto; pointer-events: none; }
+@media (max-width: 900px) { .nv-fallback { right: 50%; transform: translateX(50%); width: 58vw; bottom: 16vh; opacity: .9; } }
 .nv-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 .nv-guides { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
 .nv-guides span { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid); }

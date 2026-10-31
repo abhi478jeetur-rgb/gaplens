@@ -90,13 +90,17 @@ export default function Landing({ lang, onLang, onDemo, onStart }: { lang: Lang;
   const [rv, setRv] = useState(0);
   const [fading, setFading] = useState(false);
   const [noAnim, setNoAnim] = useState(false);
+  const [noGl, setNoGl] = useState(false);
   const secRefs = useRef<(HTMLElement | null)[]>([]);
 
   // three.js robot
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let dispose: (() => void) | undefined; let alive = true;
-    import("./robot").then(({ mountRobot }) => { if (alive && canvasRef.current) dispose = mountRobot(canvasRef.current, { reduced }); });
+    const fail = () => { if (alive) setNoGl(true); };
+    const probe = document.createElement("canvas");
+    if (!(probe.getContext("webgl2") || probe.getContext("webgl"))) { fail(); return; }
+    import("./robot").then(({ mountRobot }) => { try { if (alive && canvasRef.current) dispose = mountRobot(canvasRef.current, { reduced }); } catch { fail(); } }).catch(fail);
     return () => { alive = false; dispose?.(); };
   }, []);
 
@@ -144,6 +148,20 @@ export default function Landing({ lang, onLang, onDemo, onStart }: { lang: Lang;
   return (
     <div className={`nv ${lang === "hi" ? "hi" : ""}`}>
       <canvas ref={canvasRef} className="nv-canvas" aria-hidden />
+      {noGl && (
+        <svg className="nv-fallback" viewBox="0 0 240 300" aria-hidden>
+          <rect x="40" y="20" width="160" height="150" rx="26" fill="#E8E4DC" />
+          <rect x="62" y="44" width="116" height="100" rx="18" fill="#0B1020" stroke="#FBBF24" strokeWidth="4" />
+          <ellipse cx="100" cy="94" rx="10" ry="13" fill="#F1FAEE" />
+          <ellipse cx="140" cy="90" rx="10" ry="13" fill="#F1FAEE" />
+          <rect x="108" y="170" width="24" height="14" fill="#1B2233" />
+          <rect x="64" y="184" width="112" height="96" rx="22" fill="#E8E4DC" />
+          <circle cx="104" cy="214" r="4" fill="#FBBF24" /><circle cx="120" cy="214" r="4" fill="#FBBF24" opacity=".6" /><circle cx="136" cy="214" r="4" fill="#FBBF24" opacity=".3" />
+          <rect x="176" y="200" width="40" height="18" rx="9" fill="#E8E4DC" />
+          <rect x="212" y="192" width="12" height="34" rx="3" fill="#1B2233" />
+          <path d="M224 196 L238 186 L238 232 L224 222 Z" fill="#FBBF24" />
+        </svg>
+      )}
       <div className="nv-guides" aria-hidden><span /><span /><span /></div>
 
       <div className={`nv-bar ${scrolled || barGone ? "gone" : ""}`}>
