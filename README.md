@@ -2,7 +2,9 @@
 
 **Find what your sources hide.** Built for the Shinchan Online Hackathon 2026, problem statement *Digital Dark Spot: AI-Assisted Information Gap Detection Platform*.
 
-**Live:** https://gaplens-nine.vercel.app · **Demo video:** _YouTube link here_
+**Live:** https://gaplens-nine.vercel.app · **Launch film:** [watch (48 s)](https://gaplens-nine.vercel.app/gaplens-launch.mp4)
+
+[![GapLens launch film](docs/video/gaplens-launch-thumbnail.png)](https://gaplens-nine.vercel.app/gaplens-launch.mp4)
 
 ![GapLens landing](docs/screenshots/desktop-landing.jpg)
 

@@ -10,8 +10,8 @@ const REPO = "https://github.com/abhi478jeetur-rgb/gaplens";
 const GITHUB = "https://github.com/abhi478jeetur-rgb";
 const X_URL = "https://x.com/Abhijeetkuumar";
 const INSTAGRAM = "https://www.instagram.com/abhi.jeetkuumar/";
-// Demo video link (YouTube). Leave empty to hide the button.
-const DEMO_VIDEO = "";
+// Launch film: the top-bar button scrolls to the film section right after the hero.
+const DEMO_VIDEO = "#film";
 
 const COPY = {
   en: {
@@ -103,7 +103,7 @@ export default function Landing({ lang, onLang, onDemo, onStart }: { lang: Lang;
         <header className="topbar">
           <span className="tb-brand">GapLens</span>
           <div className="tb-right">
-            {DEMO_VIDEO && <a className="tb-demo" href={DEMO_VIDEO} target="_blank" rel="noreferrer"><span aria-hidden>▶</span> {lang === "hi" ? "डेमो वीडियो" : "Demo video"}</a>}
+            {DEMO_VIDEO && <a className="tb-demo" href={DEMO_VIDEO} onClick={(e) => { e.preventDefault(); document.getElementById("film")?.scrollIntoView({ behavior: "smooth" }); }}><span aria-hidden>▶</span> {lang === "hi" ? "डेमो वीडियो" : "Launch film"}</a>}
             <a href={GITHUB} target="_blank" rel="noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden><path fill="currentColor" d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.3 1.9 1.3 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z" /></svg></a>
             <a href={X_URL} target="_blank" rel="noreferrer" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden><path fill="currentColor" d="M18.2 2.3h3.4l-7.4 8.4 8.7 11.5h-6.8l-5.3-7-6.1 7H1.3l7.9-9L.9 2.3h7l4.8 6.4zm-1.2 17.9h1.9L7.1 4.2H5.1z" /></svg></a>
             <a href={INSTAGRAM} target="_blank" rel="noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden><path fill="none" stroke="currentColor" strokeWidth="2" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" /><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" /></svg></a>

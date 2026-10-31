@@ -21,6 +21,9 @@ export function FadeUp({ children, delay = 0, duration = 0.7, y = 24, className,
 
 const C = {
   en: {
+    filmKicker: "Launch film",
+    filmTitle: "GapLens in 48 seconds",
+    filmSub: "Five tabs, one missed fact, and how GapLens finds it. Turn the sound on.",
     statement: "We find the gaps your sources leave behind.",
     statementSub: "One question, a few links, and a clear map of what's confirmed, missing, conflicting or out of date.",
     inkWord: "DARK SPOTS",
@@ -59,6 +62,9 @@ const C = {
     start: "Ask your own question",
   },
   hi: {
+    filmKicker: "लॉन्च फ़िल्म",
+    filmTitle: "48 सेकंड में GapLens",
+    filmSub: "पाँच टैब, एक छूटी बात, और GapLens उसे कैसे ढूँढता है। आवाज़ चालू रखें।",
     statement: "हम वो कमियाँ ढूँढते हैं जो आपके स्रोत छोड़ जाते हैं।",
     statementSub: "एक सवाल, कुछ लिंक, और साफ़ नक्शा कि क्या पक्का है, क्या गायब है, कहाँ टकराव है और क्या पुराना है।",
     inkWord: "अंधेरे कोने",
@@ -164,6 +170,16 @@ export default function LandingSections({ lang, onDemo, onStart }: { lang: Lang;
         </video>
         <div className="ls-scrim" />
       </div>
+      <section className="ls-sec ls-film" id="film">
+        <FadeUp as="p" className="ls-kicker">{c.filmKicker}</FadeUp>
+        <FadeUp as="h2" className="ls-title" delay={0.08}>{c.filmTitle}</FadeUp>
+        <FadeUp as="p" className="ls-film-sub" delay={0.14}>{c.filmSub}</FadeUp>
+        <FadeUp className="ls-film-frame" delay={0.2} y={40}>
+          <video controls playsInline preload="metadata" poster="/gaplens-launch-poster.webp" aria-label={c.filmTitle}>
+            <source src="/gaplens-launch.mp4" type="video/mp4" />
+          </video>
+        </FadeUp>
+      </section>
       <Statement text={c.statement} sub={c.statementSub} />
       <InkReveal word={c.inkWord} top={c.inkTop} cta={c.inkCta} onCta={onDemo} hint={c.inkHint} aside={c.inkAside} />
       <Steps kicker={c.stepsKicker} title={c.stepsTitle} steps={c.steps} />
