@@ -9,9 +9,10 @@
   --color-ember: #3a2f16;
   --color-cream: #f1faee;
   --color-fog: #94a3b8;
-  --font-display: var(--font-bricolage), system-ui, sans-serif;
-  --font-sans: var(--font-instrument), var(--font-mukta), system-ui, sans-serif;
-  --font-hindi: var(--font-mukta), var(--font-instrument), sans-serif;
+  --font-display: var(--font-schibsted), var(--font-mukta), system-ui, sans-serif;
+  --font-sans: var(--font-schibsted), var(--font-mukta), system-ui, sans-serif;
+  --font-mono: var(--font-plex), ui-monospace, monospace;
+  --font-hindi: var(--font-mukta), var(--font-schibsted), sans-serif;
 }
 
 html { background: var(--color-night); color-scheme: dark; }

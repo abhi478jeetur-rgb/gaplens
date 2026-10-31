@@ -91,7 +91,7 @@ export function Score({ value, d, report }: { value: number; d: Dict; report: Re
   const darkSpots = report.gaps.filter((g) => g.kind === "missing").length;
   return (
     <div className="flex items-end gap-5">
-      <div className="font-display font-extrabold text-torch leading-none text-[72px] tabular-nums" aria-label={`${value}% ${d.coverage}`}>{n}%</div>
+      <div className="font-display font-medium text-torch leading-none text-[72px] tabular-nums" aria-label={`${value}% ${d.coverage}`}>{n}%</div>
       <div className="pb-2">
         <div className="text-[22px] font-medium">{d.lit(value)}</div>
         <div className="text-fog text-[15px]">{d.counts(darkSpots, report.conflicts.length, report.outdated.length)}</div>
@@ -199,7 +199,7 @@ export function Findings({ report, d, onQuote }: { report: Report; d: Dict; onQu
           <div className="space-y-5">
             {report.aspects.filter((a) => facts.some((f) => f.aspectId === a.id)).map((a) => (
               <section key={a.id}>
-                <h4 className="font-display text-[19px] font-bold">{a.label}</h4>
+                <h4 className="font-display text-[19px] font-medium">{a.label}</h4>
                 <ul>{facts.filter((f) => f.aspectId === a.id).map((f) => <FactLine key={f.id} f={f} report={report} d={d} onQuote={onQuote} />)}</ul>
               </section>
             ))}
@@ -248,7 +248,7 @@ export function EvidenceDrawer({ fact, source, d, onClose }: { fact: Fact | null
           <div className="flex justify-between gap-3">
             <div>
               <p className="text-[13px] text-fog">{source?.site}{source?.date ? `, ${source.date}` : `, ${d.undated}`}</p>
-              <h3 className="font-display text-[20px] font-bold leading-tight mt-1">{source?.title}</h3>
+              <h3 className="font-display text-[20px] font-medium leading-tight mt-1">{source?.title}</h3>
             </div>
             <button onClick={onClose} className="text-fog hover:text-cream text-[15px] h-fit">{d.close}</button>
           </div>
