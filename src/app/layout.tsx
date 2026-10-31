@@ -6,9 +6,35 @@ const serif = Instrument_Serif({ subsets: ["latin"], variable: "--font-serif", w
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", weight: ["400", "500", "600", "700", "800"] });
 const mukta = Mukta({ subsets: ["devanagari", "latin"], variable: "--font-mukta", weight: ["400", "500", "600"] });
 
+const SITE = "https://gaplens-nine.vercel.app";
+const TITLE = "GapLens · Find what your sources hide";
+const DESC = "Ask one question, add a few links. GapLens shows what's confirmed, what's missing, what conflicts and what's outdated, with the exact quote behind every finding. Free, open source, English and Hindi.";
+
 export const metadata: Metadata = {
-  title: "GapLens · find the gaps in your sources",
-  description: "Add a question and a few sources. GapLens shows what's confirmed, what's missing, what disagrees, what may be outdated, and what to verify next, with exact quotes.",
+  metadataBase: new URL(SITE),
+  title: TITLE,
+  description: DESC,
+  applicationName: "GapLens",
+  keywords: ["GapLens", "information gaps", "source verification", "fact check", "scholarship", "open source", "Hindi"],
+  authors: [{ name: "Abhijeet Kumar", url: "https://x.com/Abhijeetkuumar" }],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE,
+    siteName: "GapLens",
+    title: TITLE,
+    description: DESC,
+    locale: "en_IN",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "GapLens: Find what your sources hide" }],
+    videos: [{ url: "/gaplens-launch.mp4", width: 1920, height: 1080, type: "video/mp4" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESC,
+    creator: "@Abhijeetkuumar",
+    images: [{ url: "/og.jpg", alt: "GapLens: Find what your sources hide" }],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
