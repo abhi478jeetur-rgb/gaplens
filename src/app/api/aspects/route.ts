@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { getAspects } from "@/lib/pipeline";
 import { err } from "@/lib/http";
+import { limit } from "@/lib/guard";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 export async function POST(req: Request) {
+  const blocked = limit(req, "aspects", 12); if (blocked) return blocked;
   try {
     const { question } = await req.json();
     if (!question || String(question).trim().length < 8) return NextResponse.json({ error: "Write a fuller question first." }, { status: 400 });

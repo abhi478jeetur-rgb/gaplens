@@ -43,20 +43,22 @@ export function norm(s: string) {
   return s.toLowerCase().replace(/[“”"‘’'`]/g, "").replace(/[–—-]/g, "-").replace(/\s+/g, " ").replace(/[^\p{L}\p{N}₹%\-./, ]/gu, "").trim();
 }
 
-/** Exact (normalised) substring, else longest-common-run ratio of the quote's words. */
-export function verifyQuote(quote: string, sourceText: string): boolean {
+/** How closely a quote matches the source: "exact" (normalised substring), "near" (>=85% of its words in one run), or "none". */
+export function quoteMatch(quote: string, sourceText: string): "exact" | "near" | "none" {
   const q = norm(quote); const t = norm(sourceText);
-  if (q.length < 8) return false;
-  if (t.includes(q)) return true;
-  const qw = q.split(" "); if (qw.length < 4) return false;
+  if (q.length < 8) return "none";
+  if (t.includes(q)) return "exact";
+  const qw = q.split(" "); if (qw.length < 4) return "none";
   // sliding window: fraction of quote words that appear in order in the best-matching window
   let best = 0;
   for (let n = qw.length; n >= Math.ceil(qw.length * 0.85); n--) {
     for (let i = 0; i + n <= qw.length; i++) { if (t.includes(qw.slice(i, i + n).join(" "))) { best = n / qw.length; break; } }
     if (best) break;
   }
-  return best >= 0.85;
+  return best >= 0.85 ? "near" : "none";
 }
+
+export function verifyQuote(quote: string, sourceText: string): boolean { return quoteMatch(quote, sourceText) !== "none"; }
 
 export async function getEvidence(question: string, aspects: Aspect[], source: Source, model: string): Promise<Fact[]> {
   const excerpt = focusText(source.text, question, aspects);
@@ -81,7 +83,7 @@ ${excerpt}
     .map((f, i) => ({
       id: `${source.id}-f${i + 1}`, aspectId: f.aspect_id, sourceId: source.id,
       statement: String(f.statement).slice(0, 220), quote: String(f.quote).slice(0, 400), value: f.value ? String(f.value).slice(0, 60) : undefined,
-      verified: verifyQuote(String(f.quote), source.text),
+      ...(() => { const m = quoteMatch(String(f.quote), source.text); return { verified: m !== "none", match: m }; })(),
     }));
 }
 

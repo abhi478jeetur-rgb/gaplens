@@ -30,7 +30,10 @@ async function post<T>(path: string, body: unknown, onRate?: () => void): Promis
   for (let i = 0; i < 4; i++) {
     const res = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
     const data = await res.json().catch(() => ({}));
-    if (res.status === 429) { onRate?.(); await sleep(4000 * (i + 1)); continue; }
+    if (res.status === 429) {
+      if (data.error === "busy" && i >= 1) throw new Error("busy");
+      onRate?.(); await sleep(Math.min(15, Number(res.headers.get("retry-after") ?? 0) || 4 * (i + 1)) * 1000); continue;
+    }
     if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
     return data as T;
   }
@@ -79,6 +82,28 @@ export default function GapLensApp() {
   const counter = useRef(0);
 
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+
+  // Keep the open report across refresh, print preview and back/forward (this tab only).
+  const SAVE = "gaplens:current";
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(SAVE);
+      if (!raw) return;
+      const c = JSON.parse(raw) as { report: Report; sources: Source[]; demo: boolean; lang: Lang };
+      setQuestion(c.report.question); setReport(c.report); setLang(c.lang ?? c.report.lang); setIsDemo(!!c.demo);
+      setSrcText(Object.fromEntries(c.sources.map((x) => [x.id, x])));
+      setRows(c.sources.map((x) => ({ key: x.id, url: x.url, state: "ok" as const, source: x })));
+      setView("results");
+    } catch {}
+  }, []);
+  useEffect(() => {
+    try {
+      if (view === "results" && report) {
+        const sources = Object.values(srcText).map((x) => ({ ...x, text: x.text.slice(0, 20000) }));
+        sessionStorage.setItem(SAVE, JSON.stringify({ report, sources, demo: isDemo, lang }));
+      } else if (view === "landing" || view === "work") sessionStorage.removeItem(SAVE);
+    } catch {}
+  }, [view, report, srcText, isDemo, lang]);
 
   const readUrl = useCallback(async (url: string) => {
     const key = `r${++counter.current}`;
@@ -145,7 +170,8 @@ export default function GapLensApp() {
       remember(report, sources);
       window.scrollTo({ top: 0 });
     } catch (e) {
-      setRate(false); setError(e instanceof Error && e.message !== "rate_limited" ? `${d.error} (${e.message})` : d.rate); setView("work");
+      const m = e instanceof Error ? e.message : "";
+      setRate(false); setError(m === "busy" ? d.busy : m && m !== "rate_limited" ? `${d.error} (${m})` : d.rate); setView("work");
     }
   }
 
@@ -163,7 +189,7 @@ export default function GapLensApp() {
     setLang(L);
     if (view === "results" && report) {
       if (isDemo) { const r = await fetch(`/demo/scholarship-${L}.json`).then((x) => x.json()); setReport(r.report); }
-      else if (cache.current) run(L);
+      else if (rows.some((x) => x.state === "ok")) run(L);
     }
   }
 
@@ -317,6 +343,9 @@ export default function GapLensApp() {
           </div>
         </div>
         {isDemo && <p className="text-[14px] text-fog mt-2">{d.demoNote}</p>}
+        {!isDemo && r.lang !== lang && (
+          <button onClick={() => run(lang)} className="no-print mt-3 text-[15px] text-torch underline underline-offset-4">{lang === "hi" ? t("hi").rerunIn : t("en").rerunIn.replace("in English. Re-run in Hindi", "in Hindi. Re-run in English")}</button>
+        )}
         <div className="mt-8 flex flex-col lg:flex-row lg:items-end gap-6 justify-between border-b border-line pb-8">
           <Score value={r.coverage} d={d} report={r} />
           {r.summary && <p className="text-[18px] text-cream/90 max-w-[56ch] lg:pb-2">{r.summary}</p>}

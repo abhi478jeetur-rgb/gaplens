@@ -53,11 +53,30 @@ Give GapLens a question and 2 to 6 sources (links or pasted text). It returns:
 
 Screen recordings of the full flow: [desktop](docs/video/gaplens-desktop.mp4) · [mobile](docs/video/gaplens-mobile.mp4)
 
+## Pitch deck
+
+<p align="center"><img src="docs/deck/01-title.jpg" alt="GapLens pitch deck title slide" width="860"></p>
+
+<table>
+<tr>
+<td width="33%"><img src="docs/deck/02-problem-five-tabs.jpg" alt="Problem: one answer, five tabs that disagree"><br><sub><b>Problem</b>: one answer, five tabs that disagree</sub></td>
+<td width="33%"><img src="docs/deck/05-how-it-works.jpg" alt="How it works in four steps"><br><sub><b>How it works</b>: read, plan, evidence, score</sub></td>
+<td width="33%"><img src="docs/deck/06-proof-over-confidence.jpg" alt="Every fact carries a checked quote"><br><sub><b>Trust</b>: every fact carries a checked quote</sub></td>
+</tr>
+<tr>
+<td><img src="docs/deck/07-nsp-demo-results.jpg" alt="NSP demo results"><br><sub><b>Demo</b>: 11/11 quotes verified, 50% coverage</sub></td>
+<td><img src="docs/deck/08-hindi-mobile-whatsapp.jpg" alt="Hindi, mobile and WhatsApp"><br><sub><b>Built for India</b>: Hindi, mobile, WhatsApp</sub></td>
+<td><img src="docs/deck/10-future-scope.jpg" alt="Future scope"><br><sub><b>Next</b>: any page, any language</sub></td>
+</tr>
+</table>
+
+All 12 slides with one-line notes: [docs/deck](docs/deck/README.md) · Download: [GapLens-Pitch-Deck.pdf](docs/deck/GapLens-Pitch-Deck.pdf)
+
 ## How it works
 
 1. **Read**: server-side extraction with Mozilla Readability + linkedom. Blocks private/local addresses, 12 s timeout, 2.5 MB cap, paste-text fallback for PDFs and blocked pages.
 2. **Plan**: an LLM lists the specific, checkable facts a complete answer needs.
-3. **Evidence**: per source, the most relevant passages are selected in code and the LLM extracts facts with verbatim quotes. `verifyQuote` checks every quote against the page.
+3. **Evidence**: per source, the most relevant passages are selected in code and the LLM extracts facts with verbatim quotes. `quoteMatch` checks every quote against the page and labels it **exact** (word for word) or **near match** (at least 85% of its words in one run); anything else is marked unverified and never counts toward the score.
 4. **Synthesise**: the LLM proposes conflicts and gap notes; coverage, status and score are computed in code from verified facts only.
 
 LLM: Groq (`openai/gpt-oss-120b`, fallbacks `openai/gpt-oss-20b`, `qwen/qwen3.8-27b`).
@@ -81,5 +100,8 @@ The scholarship demo (`/demo/*.json`) is a saved run over four real pages read o
 - Fonts: Instrument Serif, Plus Jakarta Sans, Mukta (Google Fonts).
 
 ## Limits
+
+- API routes are rate limited per IP and capped in size (question 500 chars, up to 6 sources, 60,000 pasted chars) to protect the shared model quota during judging. If GapLens is busy, the demo still works offline.
+- The open report survives refresh and print (saved in this tab only). Switching language on a report re-runs the synthesis in that language.
 
 GapLens flags *potential* gaps and conflicts. It is a research aid, not legal or official advice; always confirm on the official source.

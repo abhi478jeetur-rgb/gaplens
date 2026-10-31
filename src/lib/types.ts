@@ -8,6 +8,8 @@ export interface Aspect { id: string; label: string; why: string; importance: "h
 export interface Fact {
   id: string; aspectId: string; sourceId: string; statement: string; quote: string; value?: string;
   verified: boolean;
+  /** exact = word-for-word in the source; near = at least 85% of its words in one run */
+  match?: "exact" | "near" | "none";
 }
 export type AspectStatus = "covered" | "partial" | "missing" | "conflict";
 export interface Conflict { id: string; aspectId: string; factA: string; factB: string; explanation: string; confidence: "high" | "med" | "low" }

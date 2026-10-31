@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Fact, Report, Source } from "@/lib/types";
 import type { Dict } from "@/lib/i18n";
 
@@ -79,14 +79,19 @@ export function CoverageMap({ report, d, onOpen }: { report: Report; d: Dict; on
 }
 
 export function Score({ value, d, report }: { value: number; d: Dict; report: Report }) {
-  const [n, setN] = useState(0);
+  const [n, setN] = useState(value);
+  const shown = useRef<number | null>(null);
   useEffect(() => {
+    // Count up once per new report; never drop back to 0 on re-renders.
+    if (shown.current === value) return;
+    const from = shown.current ?? 0; shown.current = value;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { setN(value); return; }
+    if (reduce || from === value) { setN(value); return; }
     let raf = 0; const t0 = performance.now();
-    const step = (t: number) => { const p = Math.min(1, (t - t0) / 900); setN(Math.round(value * (1 - Math.pow(1 - p, 3)))); if (p < 1) raf = requestAnimationFrame(step); };
-    const timer = setTimeout(() => (raf = requestAnimationFrame(step)), 1500);
-    return () => { clearTimeout(timer); cancelAnimationFrame(raf); };
+    setN(from);
+    const step = (t: number) => { const p = Math.min(1, (t - t0) / 900); setN(Math.round(from + (value - from) * (1 - Math.pow(1 - p, 3)))); if (p < 1) raf = requestAnimationFrame(step); else setN(value); };
+    raf = requestAnimationFrame(step);
+    return () => { cancelAnimationFrame(raf); setN(value); };
   }, [value]);
   const darkSpots = report.gaps.filter((g) => g.kind === "missing").length;
   return (
@@ -131,6 +136,7 @@ function FactLine({ f, report, d, onQuote }: { f: Fact; report: Report; d: Dict;
         {s?.site}{" "}
         <button onClick={() => onQuote(f)} className="text-torch underline underline-offset-4 decoration-1 hover:decoration-2 ml-2">{d.openQuote}</button>
         {!f.verified && <span className="ml-2">({d.unverified})</span>}
+        {f.verified && f.match === "near" && <span className="ml-2">(≈ {d.nearShort})</span>}
       </p>
     </li>
   );
@@ -252,7 +258,7 @@ export function EvidenceDrawer({ fact, source, d, onClose }: { fact: Fact | null
             </div>
             <button onClick={onClose} className="text-fog hover:text-cream text-[15px] h-fit">{d.close}</button>
           </div>
-          <p className={`text-[14px] mt-3 ${fact.verified ? "text-torch" : "text-fog"}`}>{fact.verified ? "✓ " + d.verified : d.unverified}</p>
+          <p className={`text-[14px] mt-3 ${fact.verified ? "text-torch" : "text-fog"}`}>{!fact.verified ? d.unverified : fact.match === "near" ? "≈ " + d.near : "✓ " + d.verified}</p>
           <p className="text-[16px] mt-1">{fact.statement}</p>
         </div>
         <div className="p-5 overflow-y-auto text-[15px] leading-relaxed text-cream/85 flex-1">
