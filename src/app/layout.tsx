@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     description: DESC,
     locale: "en_IN",
     images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "GapLens: Find what your sources hide" }],
-    videos: [{ url: "/gaplens-launch.mp4", width: 1920, height: 1080, type: "video/mp4" }],
+    videos: [{ url: `${SITE}/gaplens-launch.mp4`, width: 1920, height: 1080, type: "video/mp4" }],
   },
   twitter: {
     card: "summary_large_image",
