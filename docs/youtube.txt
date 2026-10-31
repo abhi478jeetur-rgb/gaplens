@@ -1,0 +1,31 @@
+TITLE
+GapLens – Find What Your Sources Hide | AI Information Gap Detection | Shinchan Hackathon 2026
+
+DESCRIPTION
+GapLens checks your sources before you trust them. Ask one question, add 2 to 6 links, and it shows what's confirmed, what's missing, where sources disagree, which pages may be outdated, and what to verify next, with the exact quote behind every finding. English and Hindi. Free, no sign-up.
+
+Try it: https://gaplens-nine.vercel.app
+Code: https://github.com/abhi478jeetur-rgb/gaplens
+
+Built for Shinchan Online Hackathon 2026, problem statement "Digital Dark Spot: AI-Assisted Information Gap Detection Platform".
+
+How it works
+• Reads each page on the server (Readability), with paste-text fallback for PDFs and blocked sites
+• AI plans what a complete answer needs
+• Every fact is matched to a verbatim quote, checked in code
+• Coverage, gaps and conflicts are computed from verified evidence only
+• Groq LLMs, Next.js 15, Vercel
+
+Timestamps
+0:00 Intro
+0:05 The problem
+0:12 How it works
+0:21 Desktop demo: live run on 4 real scholarship pages
+0:47 Results, Verify next checklist, coverage map
+1:05 Exact quotes and conflicts (₹3.5 lakh vs ₹2.5 lakh)
+1:22 Hindi
+1:34 Mobile demo
+2:20 Try it
+
+TAGS
+GapLens, AI, hackathon, information gap, fact check, scholarship, NSP, Hindi, Next.js, Groq, Shinchan hackathon 2026

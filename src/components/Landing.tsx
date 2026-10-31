@@ -88,6 +88,7 @@ export default function Landing({ lang, onLang, onDemo, onStart }: { lang: Lang;
       <div className="viewport">
         <div className="bg">
           <video autoPlay muted loop playsInline poster="/hero.webp" aria-label="Painted alpine panorama: a lone hiker with a pink backpack faces a snow-capped peak above a sea of clouds">
+            <source src="/hero.webm" type="video/webm" />
             <source src="/hero.mp4" type="video/mp4" />
           </video>
         </div>
