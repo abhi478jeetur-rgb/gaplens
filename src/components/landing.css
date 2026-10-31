@@ -235,8 +235,8 @@ html.js-enter .nx .rule { transform: scaleX(0); transform-origin: left center; }
 .nx .topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 4; display: flex; align-items: center; justify-content: space-between; padding: 22px calc(46.6 * var(--u)) 0; color: #fff; }
 .nx .tb-brand { font-family: var(--nx-serif); font-size: 26px; letter-spacing: -.01em; text-shadow: 0 1px 12px rgba(0,0,0,.18); }
 .nx .tb-right { display: flex; align-items: center; gap: 18px; }
-.nx .tb-right > a:not(.tb-demo) { width: 22px; height: 22px; color: #fff; opacity: .92; transition: opacity .2s, transform .2s; filter: drop-shadow(0 1px 6px rgba(0,0,0,.2)); }
-.nx .tb-right > a:not(.tb-demo):hover { opacity: 1; transform: translateY(-1px); }
+.nx .tb-right > a:not(.tb-demo):not(.tb-star) { width: 22px; height: 22px; color: #fff; opacity: .92; transition: opacity .2s, transform .2s; filter: drop-shadow(0 1px 6px rgba(0,0,0,.2)); }
+.nx .tb-right > a:not(.tb-demo):not(.tb-star):hover { opacity: 1; transform: translateY(-1px); }
 .nx .tb-right svg { width: 100%; height: 100%; display: block; }
 .nx .tb-demo { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; font-size: 14px; font-weight: 500; transition: background .2s; }
 .nx .tb-demo:hover { background: rgba(255,255,255,.28); }
@@ -245,9 +245,23 @@ html.js-enter .nx .rule { transform: scaleX(0); transform-origin: left center; }
   .nx .topbar { padding: 16px 22px 0; }
   .nx .tb-brand { font-size: 22px; }
   .nx .tb-right { gap: 14px; }
-  .nx .tb-right > a:not(.tb-demo) { width: 19px; height: 19px; }
+  .nx .tb-right > a:not(.tb-demo):not(.tb-star) { width: 19px; height: 19px; }
   .nx .tb-demo { padding: 6px 12px; font-size: 13px; }
 }
+
+/* GitHub star button */
+.nx .tb-star { display: inline-flex; align-items: stretch; border-radius: 999px; overflow: hidden; border: 1px solid rgba(255,255,255,.45); background: rgba(255,255,255,.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; font-size: 14px; font-weight: 500; text-decoration: none; box-shadow: 0 4px 18px rgba(0,0,0,.12); transition: background .2s, transform .2s; }
+.nx .tb-star:hover { background: rgba(255,255,255,.26); transform: translateY(-1px); }
+.nx .tb-star-l, .nx .tb-star-n { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; white-space: nowrap; }
+.nx .tb-star-n { gap: 6px; border-left: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.1); font-variant-numeric: tabular-nums; }
+.nx .tb-star svg { width: 17px; height: 17px; flex: none; }
+.nx .tb-star-n svg { width: 14px; height: 14px; color: #ffd76a; }
+@media (max-width: 648px) {
+  .nx .tb-star { font-size: 12.5px; }
+  .nx .tb-star-l, .nx .tb-star-n { padding: 6px 10px; gap: 6px; }
+  .nx .tb-star-l > span { display: none; }
+}
+@media (min-width: 649px) and (max-width: 900px) { .nx .tb-star-l > span { font-size: 13px; } }
 
 /* ---------- launch film, first thing after the hero ---------- */
 .ls-film { padding-top: clamp(72px, 11vh, 120px); padding-bottom: clamp(48px, 8vh, 96px); }
