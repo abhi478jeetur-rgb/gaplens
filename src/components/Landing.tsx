@@ -4,6 +4,7 @@
 import { useEffect, useRef } from "react";
 import type { Lang } from "@/lib/types";
 import "./landing.css";
+import LandingSections from "./LandingSections";
 
 const REPO = "https://github.com/abhi478jeetur-rgb/gaplens";
 
@@ -85,7 +86,7 @@ export default function Landing({ lang, onLang, onDemo, onStart }: { lang: Lang;
 
   return (
     <div className={`nx ${lang === "hi" ? "hi" : ""}`} ref={root}>
-      <div className="viewport">
+      <section className="viewport hero">
         <div className="bg">
           <video autoPlay muted loop playsInline poster="/hero.webp" aria-label="Painted alpine panorama: a lone hiker with a pink backpack faces a snow-capped peak above a sea of clouds">
             <source src="/hero.webm" type="video/webm" />
@@ -102,6 +103,9 @@ export default function Landing({ lang, onLang, onDemo, onStart }: { lang: Lang;
             <a className="start" href="#start" onClick={act("start")}>{c.start} <span aria-hidden>→</span></a>
           </div>
         </main>
+        <a className="scrollcue" href="#more" onClick={(e) => { e.preventDefault(); document.getElementById("more")?.scrollIntoView({ behavior: "smooth" }); }} aria-label="Scroll"><span /></a>
+      </section>
+      <div id="more"><LandingSections lang={lang} onDemo={onDemo} onStart={onStart} /></div>
         <footer className="footer">
           <div className="finner">
             <div className="brandrow">
@@ -140,7 +144,6 @@ export default function Landing({ lang, onLang, onDemo, onStart }: { lang: Lang;
             </div>
           </div>
         </footer>
-      </div>
     </div>
   );
 }

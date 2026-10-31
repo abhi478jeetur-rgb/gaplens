@@ -3,7 +3,7 @@ import { Instrument_Serif, Plus_Jakarta_Sans, Mukta } from "next/font/google";
 import "./globals.css";
 
 const serif = Instrument_Serif({ subsets: ["latin"], variable: "--font-serif", weight: "400" });
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", weight: ["400", "500", "600"] });
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", weight: ["400", "500", "600", "700", "800"] });
 const mukta = Mukta({ subsets: ["devanagari", "latin"], variable: "--font-mukta", weight: ["400", "500", "600"] });
 
 export const metadata: Metadata = {

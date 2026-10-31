@@ -6,6 +6,12 @@
 
 ![GapLens landing](docs/screenshots/desktop-landing.jpg)
 
+Scroll past the hero for the story: a statement over a fixed ember video, a cursor-following ink trail that reveals the "dark spots", a four-step "How it works" rail, features, who it's for, and a final call to action.
+
+| Cursor ink reveal | How it works |
+|---|---|
+| ![Cursor ink reveal](docs/screenshots/desktop-cursor.jpg) | ![How it works](docs/screenshots/desktop-steps.jpg) |
+
 Give GapLens a question and 2 to 6 sources (links or pasted text). It returns:
 
 - **Confirmed facts**, each with the exact quote and a link to the page it came from. Quotes are checked against the source text in code; anything the model paraphrased is marked unverified.
