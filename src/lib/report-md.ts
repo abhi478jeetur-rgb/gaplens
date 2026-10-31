@@ -17,3 +17,10 @@ export function toMarkdown(r: Report, d: Dict): string {
   L.push("", `_${d.disclaimer}_`, `_Generated ${r.createdAt}_`);
   return L.join("\n");
 }
+
+export function toChecklist(r: Report, d: Dict): string {
+  const L = [`${d.shareHead} ${r.question}`, `${d.coverage}: ${r.coverage}% (${d.lit(r.coverage)})`, ""];
+  r.verifyNext.forEach((v, i) => L.push(`${i + 1}. [${d.importance[v.priority]}] ${v.action} (${d.where}: ${v.where})`));
+  L.push("", d.disclaimer, "https://gaplens-nine.vercel.app");
+  return L.join("\n");
+}

@@ -28,6 +28,9 @@ const en = {
   importance: { high: "High", med: "Medium", low: "Low" } as Record<string, string>,
   demoNote: "Demo run with saved results from 4 real pages, read on 31 Oct 2026.",
   checked: "checked", copy: "Copied",
+  recent: "Your recent questions", clearRecent: "Clear", copyList: "Copy checklist", whatsapp: "Share on WhatsApp", print: "Save as PDF",
+  urlMulti: "Tip: paste several links at once, one per line or separated by spaces.", shortcut: "Ctrl + Enter to analyse",
+  shareHead: "GapLens checklist for", sourcesShort: "sources",
 };
 
 const hi: typeof en = {
@@ -58,6 +61,9 @@ const hi: typeof en = {
   importance: { high: "ज़रूरी", med: "मध्यम", low: "कम" },
   demoNote: "डेमो: 4 असली पेजों से सहेजे गए नतीजे, 31 अक्टूबर 2026 को पढ़े गए।",
   checked: "जाँचा", copy: "कॉपी हुआ",
+  recent: "आपके हाल के सवाल", clearRecent: "हटाएँ", copyList: "चेकलिस्ट कॉपी करें", whatsapp: "WhatsApp पर भेजें", print: "PDF सेव करें",
+  urlMulti: "सुझाव: कई लिंक एक साथ पेस्ट करें, हर लाइन में एक या स्पेस से अलग।", shortcut: "विश्लेषण के लिए Ctrl + Enter",
+  shareHead: "GapLens चेकलिस्ट:", sourcesShort: "स्रोत",
 };
 
 export const dict = { en, hi };

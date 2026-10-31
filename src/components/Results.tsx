@@ -28,9 +28,9 @@ export function CoverageMap({ report, d, onOpen }: { report: Report; d: Dict; on
           <caption className="sr-only">{d.map}</caption>
           <thead>
             <tr>
-              <th className="sticky left-0 bg-dusk text-left font-normal text-fog text-sm min-w-[150px]" />
+              <th className="sticky left-0 bg-[#0b2635] text-left font-normal text-fog text-sm min-w-[132px]" />
               {cols.map((s) => (
-                <th key={s.id} scope="col" className="text-[13px] font-medium text-fog text-left min-w-[76px] max-w-[110px] truncate" title={s.title}>
+                <th key={s.id} scope="col" className="text-[13px] font-medium text-fog text-left min-w-[64px] max-w-[104px] truncate" title={s.title}>
                   {s.site.replace(/\.(com|in|org|wiki|gov\.in)$/,"").replace(/^school\./, "")}
                 </th>
               ))}
@@ -42,7 +42,7 @@ export function CoverageMap({ report, d, onOpen }: { report: Report; d: Dict; on
               const dark = a.status === "missing";
               return (
                 <tr key={a.id}>
-                  <th scope="row" className="sticky left-0 bg-dusk text-left font-normal text-[15px] pr-2">
+                  <th scope="row" className="sticky left-0 bg-[#0b2635] text-left font-normal text-[15px] pr-2">
                     <span className={a.importance === "high" ? "text-cream" : "text-cream/80"}>{a.label}</span>
                   </th>
                   {cols.map((s, ci) => {

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Schibsted_Grotesk, IBM_Plex_Mono, Mukta } from "next/font/google";
+import { Instrument_Serif, Plus_Jakarta_Sans, Mukta } from "next/font/google";
 import "./globals.css";
 
-const schibsted = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted", weight: ["400", "500", "600"] });
-const plex = IBM_Plex_Mono({ subsets: ["latin"], variable: "--font-plex", weight: ["300", "400", "500"] });
+const serif = Instrument_Serif({ subsets: ["latin"], variable: "--font-serif", weight: "400" });
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta", weight: ["400", "500", "600"] });
 const mukta = Mukta({ subsets: ["devanagari", "latin"], variable: "--font-mukta", weight: ["400", "500", "600"] });
 
 export const metadata: Metadata = {
@@ -13,8 +13,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${schibsted.variable} ${plex.variable} ${mukta.variable}`}>{children}</body>
+    <html lang="en" suppressHydrationWarning className={`${serif.variable} ${jakarta.variable} ${mukta.variable}`}>
+      <head>
+        <meta name="theme-color" content="#1d8fb8" />
+        <script dangerouslySetInnerHTML={{ __html: "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-enter');setTimeout(function(){document.documentElement.classList.remove('js-enter')},3500)}}catch(e){}" }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
