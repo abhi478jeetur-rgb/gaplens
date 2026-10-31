@@ -92,7 +92,7 @@ html.js-enter .nx .rule { transform: scaleX(0); transform-origin: left center; }
   .nx .bg video { left: 0; right: 0; bottom: 0; width: 100%; height: 106%; min-height: 0; object-fit: cover; object-position: 80% bottom; }
   .nx .scrim { position: fixed; height: 72vh; background: linear-gradient(180deg, rgba(6, 22, 34, .5), rgba(6, 22, 34, .38) 55%, rgba(6, 22, 34, 0)); }
   .nx .abs { position: static; }
-  .nx .eyebrow { margin-top: clamp(28px, 7vh, 72px); font-size: clamp(10.5px, 2.9vw, 15px); letter-spacing: .09em; }
+  .nx .eyebrow { margin-top: clamp(76px, 11vh, 100px); font-size: clamp(10.5px, 2.9vw, 15px); letter-spacing: .09em; }
   .nx .headline-mask { margin-top: clamp(12px, 2vh, 20px); }
   .nx .headline, .nx.hi .headline { white-space: normal; font-size: clamp(34px, 9.4vw, 72px); line-height: 1.04; }
   .nx .lede, .nx.hi .lede { width: auto; max-width: 38ch; margin-top: clamp(14px, 2.4vh, 24px); font-size: clamp(14.5px, 3.9vw, 18px); line-height: 1.42; letter-spacing: 0; }
@@ -230,3 +230,21 @@ html.js-enter .nx .rule { transform: scaleX(0); transform-origin: left center; }
   .ls-rail { left: 17px; }
 }
 @media (min-width: 901px) and (max-width: 1100px) { .ls-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Top bar: brand, demo video, socials */
+.nx .topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 4; display: flex; align-items: center; justify-content: space-between; padding: 22px calc(46.6 * var(--u)) 0; color: #fff; }
+.nx .tb-brand { font-family: var(--nx-serif); font-size: 26px; letter-spacing: -.01em; text-shadow: 0 1px 12px rgba(0,0,0,.18); }
+.nx .tb-right { display: flex; align-items: center; gap: 18px; }
+.nx .tb-right > a:not(.tb-demo) { width: 22px; height: 22px; color: #fff; opacity: .92; transition: opacity .2s, transform .2s; filter: drop-shadow(0 1px 6px rgba(0,0,0,.2)); }
+.nx .tb-right > a:not(.tb-demo):hover { opacity: 1; transform: translateY(-1px); }
+.nx .tb-right svg { width: 100%; height: 100%; display: block; }
+.nx .tb-demo { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; font-size: 14px; font-weight: 500; transition: background .2s; }
+.nx .tb-demo:hover { background: rgba(255,255,255,.28); }
+.nx .tb-demo span { font-size: 10px; }
+@media (max-width: 648px) {
+  .nx .topbar { padding: 16px 22px 0; }
+  .nx .tb-brand { font-size: 22px; }
+  .nx .tb-right { gap: 14px; }
+  .nx .tb-right > a:not(.tb-demo) { width: 19px; height: 19px; }
+  .nx .tb-demo { padding: 6px 12px; font-size: 13px; }
+}
